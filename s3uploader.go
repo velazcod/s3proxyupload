@@ -14,7 +14,7 @@ var AWS_S3_FOLDER = "";
 
 func uploadToS3(path string, hash string, data []byte) {
 
-    auth := aws.Auth{
+  auth := aws.Auth {
     AccessKey: AWS_S3_ACCESS_KEY,
     SecretKey: AWS_S3_SECRET_KEY,
   }
