@@ -2,7 +2,7 @@
 
 ## Description
 
-     ```
-      $ go build
-      $ ./go-image-proxy
-     ```
+  ```
+  $ go build
+  $ ./go-image-proxy
+  ```
