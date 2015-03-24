@@ -4,6 +4,8 @@
 
 Using the AWS SDK on Mobile apps is usually overkill and bloated, when in most cases, it's only needed to upload to S3. Doing a direct request to S3 is also a bit painful due to headers signing, so this is a solution for that problem.
 
+## REQUIRES AUTHENTICATION TO BE IMPLEMENTED, SEE api.go:26
+
 ## Steps to build
 
 * Open s3uploader.go and set your access key, secret, upload folder and bucket
