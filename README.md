@@ -16,6 +16,15 @@ Using the AWS SDK on Mobile apps is usually overkill and bloated, when in most c
 
 * Deploy
 
+* For development, install gin:
+  ```
+  $ go get github.com/codegangsta/gin
+  ```
+
+* Listen for changes and build:
+  ```
+  $ gin -p '8080' run *.go
+  ```
 
 ## Endpoints available
 
@@ -23,14 +32,31 @@ See routes.go to configure them:
 
 * GET /status
   Expected response:
+
+  ```
   200 OK
   { "status": "ok" }
+  ```
 
 * POST /upload (Param: "file")
   Expected responses:
 
+  ```
   202 ACCEPTED
   { "checksum": "sha1checksum" }
+  ```
 
-  500 INTERNAL SERVER ERROR
+  ```
+  400 BAD REQUEST
+  { "error": "Unauthorized" }
+  ```
+
+  ```
+  400 BAD REQUEST
   { "error": "Error parsing uploaded file" }
+  ```
+
+  ```
+  401 UNAUTHORIZED
+  { "error": "Unauthorized" }
+  ```
