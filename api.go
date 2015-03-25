@@ -4,6 +4,7 @@ import (
   "net/http"
   "encoding/json"
   "io/ioutil"
+  "strings"
   "path/filepath"
   "github.com/zenazn/goji/web"
 )
@@ -92,17 +93,31 @@ func uploadMedia(c web.C, w http.ResponseWriter, r *http.Request) {
     return
   }
 
+  // Get the file extension
+  ext := strings.ToLower(strings.TrimLeft(filepath.Ext(fileHeader.Filename), "."))
+
+  _, fileTypeSupported := fileTypesMap[ext]
+  if !fileTypeSupported {
+    errorResponse := ErrorResponse{"File type not supported"}
+    js, jsonError := json.Marshal(errorResponse)
+    if jsonError != nil {
+      http.Error(w, "", http.StatusInternalServerError)
+      return
+    }
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusBadRequest)
+    w.Write(js)
+    return
+  }
+
   // Read the file from the request
   fileBuf, _ := ioutil.ReadAll(file)
 
   // Calculate hash of the file
   fileHash := keyOf(fileBuf)
 
-  // Get the file extension
-  ext := filepath.Ext(fileHeader.Filename)
-
   // Set the path of the file by using the configured "folder", the SHA1 hash and extension
-  path := AWS_S3_FOLDER + fileHash + ext
+  path := AWS_S3_FOLDER + fileHash + "." + ext
 
   // Upload the file to S3
   uploadToS3(path, fileHash, fileBuf)
