@@ -7,13 +7,7 @@ import (
   "launchpad.net/goamz/aws"
 )
 
-var AWS_S3_ACCESS_KEY = ""
-var AWS_S3_SECRET_KEY = ""
-var AWS_S3_BUCKET_NAME = ""
-var AWS_S3_FOLDER = "";
-
 func uploadToS3(path string, hash string, data []byte) {
-
   // Setup the AWS authentication
   auth := aws.Auth {
     AccessKey: AWS_S3_ACCESS_KEY,

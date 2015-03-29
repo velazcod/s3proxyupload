@@ -10,8 +10,6 @@ import (
 )
 
 // Configuration variables
-var REQUIRES_AUTH = false
-var AUTH_BASE_URL = "https://base_url_goes_here"
 var AUTH_ENDPOINT_URL = AUTH_BASE_URL + "/oauth/token/info"
 
 // Status endpoint just used to verify that the server is up and running
@@ -30,7 +28,7 @@ func status(c web.C, w http.ResponseWriter, r *http.Request) {
 // Method as a proxy to upload media to S3, supports verifying auth tokens
 func uploadMedia(c web.C, w http.ResponseWriter, r *http.Request) {
 
-  if (REQUIRES_AUTH) {
+  if REQUIRES_AUTH == "true" {
     // Get the bearer auth token from the current request
     receivedBearerToken := r.Header.Get("Authorization")
     if len(receivedBearerToken) == 0 {

@@ -6,7 +6,12 @@ Using the AWS SDK on Mobile apps is usually overkill and bloated, when in most c
 
 ## Steps to build
 
-* Open s3uploader.go and set your access key, secret, upload folder and bucket
+* Set up your environment
+
+  ```
+  $ . environment_setup/local.sh
+  ```
+
 * Build the app like this:
 
   ```
