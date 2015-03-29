@@ -7,7 +7,7 @@ import (
   "launchpad.net/goamz/aws"
 )
 
-func uploadToS3(path string, hash string, data []byte) {
+func uploadToS3(path string, hash string, data []byte) string {
   // Setup the AWS authentication
   auth := aws.Auth {
     AccessKey: AWS_S3_ACCESS_KEY,
@@ -22,6 +22,10 @@ func uploadToS3(path string, hash string, data []byte) {
   connection := s3.New(auth, aws.USEast)
   esBucket := connection.Bucket(AWS_S3_BUCKET_NAME)
   esBucket.Put(path, data, contType, s3.BucketOwnerFull)
+
+  // Make a subrequest to grab the URL of the file we just uploaded
+  url := esBucket.URL(path)
+  return url
 }
 
 

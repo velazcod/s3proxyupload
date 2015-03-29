@@ -118,7 +118,7 @@ func uploadMedia(c web.C, w http.ResponseWriter, r *http.Request) {
   path := AWS_S3_FOLDER + fileHash + "." + ext
 
   // Upload the file to S3
-  uploadToS3(path, fileHash, fileBuf)
+  uploadUrl := uploadToS3(path, fileHash, fileBuf)
 
   // Generate the success response
   mediaUploadResponse := MediaUploadResponse{fileHash}
@@ -129,6 +129,7 @@ func uploadMedia(c web.C, w http.ResponseWriter, r *http.Request) {
   }
 
   w.Header().Set("Content-Type", "application/json")
+  w.Header().Set("X-File-URL", uploadUrl)
   w.WriteHeader(http.StatusAccepted)
   w.Write(js)
 }
